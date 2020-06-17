@@ -39,9 +39,7 @@ parsed_test_dataset = test_dataset.map(read_tfrecord).batch(64)
 model = Sequential()
 model.add(layers.Bidirectional(layers.LSTM(512, input_shape=(431, 1025), return_sequences=True), merge_mode='sum'))
 model.add(layers.Bidirectional(layers.LSTM(512, return_sequences=True)))
-# model.add(layers.BatchNormalization(axis=2))
 model.add(layers.Dense(1025))
-
 
 model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.001))
 
