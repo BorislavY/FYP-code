@@ -1,6 +1,6 @@
 [y, Fs] = audioread("impulse.wav");
 
-L = length(y);      % Signal length
+L = length(y);
 
 n = 2^nextpow2(L);
 
