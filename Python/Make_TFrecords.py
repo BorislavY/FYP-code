@@ -66,9 +66,5 @@ for i in tqdm(range(1, 120)):
             serialized_example = tf.train.Example(features=tf.train.Features(feature=feature)).SerializeToString()
             writer.write(serialized_example)
 
-    print(i)
-
-
-
 
 
