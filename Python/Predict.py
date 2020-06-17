@@ -30,15 +30,7 @@ std = 4.5945316486006
 example = 60
 
 # Creating lists of file paths.
-test_file_paths = []
-
-test_file_paths.append(r'B:\FYP\Models\TFRecordsMag\data.tfrecords' + str(example))
-
-# Splitting file paths 10:1 for training and testing.
-# for i in range(1, 120):
-#     if i % 10 == 0:
-#         # Appending the file path.
-#         test_file_paths.append(r'B:\FYP\Models\TFRecordsMagPhase\data.tfrecords' + str(i))
+test_file_path = r'B:\FYP\Models\TFRecordsMag\data.tfrecords' + str(example)
 
 temp_df = pd.read_hdf(r'B:\MedleyDB\dataset.h5', key=str(example))
 
@@ -63,14 +55,14 @@ recon_stft = y_mag * (np.cos(y_phase) + np.multiply(np.sin(y_phase), 1j))
 inverse_recon = librosa.core.istft(recon_stft, hop_length=1024)
 librosa.output.write_wav(r'Audio\RealStem3.wav', inverse_recon, 44100)
 
-test_dataset = tf.data.TFRecordDataset(test_file_paths)
+test_dataset = tf.data.TFRecordDataset(test_file_path)
 
 parsed_test_dataset = test_dataset.map(read_tfrecord).batch(1)
 
 fig, axs = plt.subplots(1, 5)
 
 
-# # create and fit the LSTM network
+# Model 1
 model = Sequential()
 model.add(layers.Bidirectional(layers.LSTM(1024, input_shape=(431, 1025), return_sequences=True), merge_mode='concat'))
 model.add(layers.Bidirectional(layers.LSTM(1024, return_sequences=True), merge_mode='concat'))
@@ -90,7 +82,7 @@ inverse_recon = librosa.core.istft(recon_stft, hop_length=1024)
 librosa.output.write_wav(r'Audio\ModelMag2_3.wav', inverse_recon, 44100)
 
 
-# # create and fit the LSTM network
+# Model 2
 model = Sequential()
 model.add(layers.Bidirectional(layers.LSTM(512, input_shape=(431, 1025), return_sequences=True, dropout=0.5), merge_mode='concat'))
 model.add(layers.Bidirectional(layers.LSTM(512, return_sequences=True, dropout=0.5), merge_mode='concat'))
@@ -110,7 +102,7 @@ inverse_recon = librosa.core.istft(recon_stft, hop_length=1024)
 librosa.output.write_wav(r'Audio\ModelMag5_3.wav', inverse_recon, 44100)
 
 
-# # create and fit the LSTM network
+# Model 3
 model = Sequential()
 model.add(layers.LSTM(512, input_shape=(431, 1025), return_sequences=True, dropout=0.2))
 model.add(layers.LSTM(512, return_sequences=True, dropout=0.2))
@@ -129,11 +121,6 @@ recon_stft = yhat_mag * (np.cos(yhat_phase) + np.multiply(np.sin(yhat_phase), 1j
 inverse_recon = librosa.core.istft(recon_stft, hop_length=1024)
 librosa.output.write_wav(r'Audio\ModelMag12_3.wav', inverse_recon, 44100)
 
-# ymag = np.exp(ymag)
-#
-# #ymag = np.multiply(np.power(ymag, 10), std) + mean
-#
-# yphase = np.swapaxes(np.squeeze(yhat[:, :, 1025:2050]), 0, 1)
 
 librosa.display.specshow(librosa.amplitude_to_db(x_mag, ref=np.max), y_axis='log', x_axis='time', ax=axs[0])
 axs[0].set_title('Log spectrogram raw')
@@ -142,10 +129,3 @@ librosa.display.specshow(librosa.amplitude_to_db(y_mag, ref=np.max), y_axis='log
 axs[1].set_title('Log spectrogram stem')
 
 plt.show()
-
-# # Z score normalization of the magnitude
-# mag_raw_log = np.log(mag_raw + 1e-10)
-# mag_raw_logZ = np.divide(mag_raw_log - mean, std)
-#
-# ymag = np.multiply(mag_raw_logZ, std) + mean
-# ymag = np.exp(ymag)
