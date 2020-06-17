@@ -54,10 +54,6 @@ for i in tqdm(range(1, 120)):
             # phase_rawZ = np.divide(phase_raw - meanP, stdP)
             # phase_stemZ = np.divide(phase_stem - meanP, stdP)
 
-            # for idx in range(0, 431):
-            #     plt.scatter(x_logZ[idx, :], np.zeros_like(x_logZ[idx, :]) + idx)
-            # plt.show()
-
             # combined_raw = np.append(mag_rawZ, phase_rawZ, axis=1)
             # combined_stem = np.append(mag_stemZ, phase_stemZ, axis=1)
 
