@@ -52,7 +52,7 @@ SoundFile==0.10.3.post1
 sox==1.3.7
 tables==3.6.1
 tensorboard==2.1.0
-tensorflow==2.1.0
+tensorflow==2.1.2
 tensorflow-estimator==2.1.0
 tensorflow-io-nightly==0.12.0.dev20200221025527
 termcolor==1.1.0
