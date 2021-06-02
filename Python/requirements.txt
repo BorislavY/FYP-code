@@ -58,6 +58,6 @@ tensorflow-io-nightly==0.12.0.dev20200221025527
 termcolor==1.1.0
 tqdm==4.43.0
 uritemplate==3.0.1
-urllib3==1.25.7
+urllib3==1.26.5
 Werkzeug==0.16.0
 wrapt==1.11.2
